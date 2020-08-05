@@ -1,4 +1,3 @@
-// if used here, no need to update html with the same script
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', async () => {
     try {
@@ -9,16 +8,6 @@ if ('serviceWorker' in navigator) {
     }
   })
 }
-
-// ES5 code of the same thing above ^^^^^^
-  // window.addEventListener('load', function () {
-  //   navigator.serviceWorker.register('/service-worker.js')
-  //     .then(function (reg) {
-  //       console.log("SW:", reg)
-  //     })
-  // })
-
-
 
 let transactions = [];
 let myChart;

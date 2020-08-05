@@ -10,11 +10,8 @@ const FILES_TO_CACHE = [
     "/js/index.js"
 ];
 
-// try to keep versions the same (ie v1)
-// instead of new cache name use different versions but keep both names the same version.
 const CACHE_NAME = 'site-cache-v1'
 const DATA_CACHE_NAME = 'data-cache-v1'
-
 
 const openCache = async () => {
     try {
@@ -35,13 +32,8 @@ const testFetch = async (event) => {
     }
 }
 
-// self.addEventListener('activate', function(e) {
-//     try {
-
-//     } catch 
-
-self.addEventListener('activate', function(e) {
-    e.waitUntil(
+self.addEventListener('activate', function (event) {
+    event.waitUntil(
         caches.keys().then(keyList => {
             return Promise.all(
                 keyList.map(key => {
@@ -51,12 +43,10 @@ self.addEventListener('activate', function(e) {
                     }
                 })
             );
-        })
+        }).catch(err => console.log(err))
     );
     self.clients.claim();
 });
-
-
 
 const handleFetch = async (event) => {
     try {
@@ -73,81 +63,28 @@ const handleFetch = async (event) => {
 self.addEventListener('fetch', event => {
     if (event.request.url.includes("/api/")) {
         event.respondWith(
-          caches.open(DATA_CACHE_NAME).then(cache => {
-            return fetch(event.request)
-              .then(response => {
-                // If the response was good, clone it and store it in the cache.
-                if (response.status === 200) {
-                  cache.put(event.request.url, response.clone());
-                }
-    
-                return response;
-              })
-              .catch(err => {
-                // Network request failed, try to get it from the cache.
-                return cache.match(event.request);
-              });
-          }).catch(err => console.log(err))
+            caches.open(DATA_CACHE_NAME).then(cache => {
+                return fetch(event.request)
+                    .then(response => {
+                        // If the response was good, clone it and store it in the cache.
+                        if (response.status === 200) {
+                            cache.put(event.request.url, response.clone());
+                        }
+
+                        return response;
+                    })
+                    .catch(err => {
+                        // Network request failed, try to get it from the cache.
+                        return cache.match(event.request);
+                    });
+            }).catch(err => console.log(err))
         );
-    
+
         return;
-      }
+    }
     event.respondWith(
-    caches.match(event.request).then(function(response) {
-        return response || fetch(event.request);
-    })
+        caches.match(event.request).then(function (response) {
+            return response || fetch(event.request);
+        })
     );
 });
-
-
-// ES5 example to compare with above code
-// self.addEventListener('install', function (event) {
-//     event.waitUntil(
-//         caches.open(CACHE_NAME)
-//             .then(function (cache) {
-//                 console.log("Opened cache")
-//                 return cache.addAll(FILES_TO_CACHE)
-//             })
-//             .catch(function (err) {
-//                 console.log(err)
-//             })
-//     )
-// })
-
-// self.addEventListener('activate', function(e) {
-//     e.waitUntil(
-//         caches.keys().then(keyList => {
-//             return Promise.all(
-//                 keyList.map(key => {
-//                     if (key !== CACHE_NAME && key !== DATA_CACHE_NAME) {
-//                         console.log('Removing old cache data', key);
-//                         return caches.delete(key);
-//                     }
-//                 })
-//             );
-//         })
-//     );
-//     self.clients.claim();
-// });
-
-// ES5 to compare to above ES6 code
-// self.addEventListener('fetch', function (event) {
-//     if (event.request.url.includes('/api')) {
-
-//         return;
-//     }
-
-//     event.respondWith(
-//         fetch(event.request.url)
-//             .catch(function () {
-//                 return caches.match(event.request)
-//                     .then(function (response) {
-//                         if (response) {
-//                             return response;
-//                         } else if (event.request.headers.get("accept").includes('text/html')) {
-//                             return caches.match('/')
-//                         }
-//                     })
-//             })
-//     )
-// })
