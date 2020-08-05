@@ -35,26 +35,26 @@ const testFetch = async (event) => {
     }
 }
 
-self.addEventListener('activate', function(e) {
-    try {
-
-    } catch 
-
 // self.addEventListener('activate', function(e) {
-//     e.waitUntil(
-//         caches.keys().then(keyList => {
-//             return Promise.all(
-//                 keyList.map(key => {
-//                     if (key !== CACHE_NAME && key !== DATA_CACHE_NAME) {
-//                         console.log('Removing old cache data', key);
-//                         return caches.delete(key);
-//                     }
-//                 })
-//             );
-//         })
-//     );
-//     self.clients.claim();
-// });
+//     try {
+
+//     } catch 
+
+self.addEventListener('activate', function(e) {
+    e.waitUntil(
+        caches.keys().then(keyList => {
+            return Promise.all(
+                keyList.map(key => {
+                    if (key !== CACHE_NAME && key !== DATA_CACHE_NAME) {
+                        console.log('Removing old cache data', key);
+                        return caches.delete(key);
+                    }
+                })
+            );
+        })
+    );
+    self.clients.claim();
+});
 
 
 
@@ -71,14 +71,33 @@ const handleFetch = async (event) => {
 }
 
 self.addEventListener('fetch', event => {
-    if (event.request.url.includes('/api')) {
-
+    if (event.request.url.includes("/api/")) {
+        event.respondWith(
+          caches.open(DATA_CACHE_NAME).then(cache => {
+            return fetch(event.request)
+              .then(response => {
+                // If the response was good, clone it and store it in the cache.
+                if (response.status === 200) {
+                  cache.put(event.request.url, response.clone());
+                }
+    
+                return response;
+              })
+              .catch(err => {
+                // Network request failed, try to get it from the cache.
+                return cache.match(event.request);
+              });
+          }).catch(err => console.log(err))
+        );
+    
         return;
-    }
-
-    event.respondWith(testFetch())
-})
-
+      }
+    event.respondWith(
+    caches.match(event.request).then(function(response) {
+        return response || fetch(event.request);
+    })
+    );
+});
 
 
 // ES5 example to compare with above code
