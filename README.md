@@ -30,7 +30,7 @@ Add expenses and deposits to a budget sheet online or offline. After entering tr
   ## Motivation
   Trackers help people keep info for reference.  It's not easy remembering how or where money is spent so this tracker will help give a timeline of income vs outcome so you know how much your spending and what's in the bank.  Not only does this work online, but offline as well!  So, no probelm if you lose internet connection, it will include entries either way and when back on line, the database is updated with all entries. 
 
-  ## Installation ![npm](https://img.shields.io/npm/v/npm?color=green&style=plastic) 
+  ## Installation 
   No installation needed.  Open with this link [Heroku](https://budget-tracker-for-you.herokuapp.com/).
 
   ## How_to_use
@@ -42,8 +42,9 @@ Add expenses and deposits to a budget sheet online or offline. After entering tr
   ## Tests
   No testing was done prior to project build however, Console logs were used along the way.    
 
-  ## License ![APM](https://img.shields.io/apm/l/npm?color=pink&style=plastic) 
-  [MIT License](https://opensource.org/licenses/MIT)
+  ## License 
+  [MIT License](https://opensource.org/licenses/MIT)<br>
+  ![APM](https://img.shields.io/apm/l/npm?color=pink&style=plastic) 
 
   Copyright © 2020 Jody Eggleston 
 
