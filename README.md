@@ -9,7 +9,6 @@ Add expenses and deposits to a budget sheet online or offline. After entering tr
   - [Motivation](#Motivation)
   - [Installation](#Installation)
   - [How to use](#How_to_use)
-  - [Benefit](#Benefit)
   - [Tests](#Tests)
   - [License](#License)
   - [Contribute](#Contribute)
