@@ -17,8 +17,8 @@ Add expenses and deposits to a budget sheet online or offline. After entering tr
 
   ## Links
   - [Heroku](https://budget-tracker-for-you.herokuapp.com/) to use the app.
-  - [GitHub Pages](https://jmeggles.github.io/18_Budget_Tracker/) to view README.
-  - [GitHub Repo](https://github.com/jmeggles/18_Budget_Tracker) to view the code.
+  - [GitHub Pages](https://jmeggles.github.io/Budget_Tracker/) to view README.
+  - [GitHub Repo](https://github.com/jmeggles/Budget_Tracker) to view the code.
 
 
  ## GIFs 
